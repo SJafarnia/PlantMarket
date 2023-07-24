@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+{% load static %}
+
+
+{% block content %}
+
+{% csrf_token %}
+                    {% for field in form %}
+                        <div class="add-post-field">
+                            <div class="add-post-label">
+                                {{field.label_tag}}
+                                {{field}}
+                            </div>
+                            <div class="add-post-errors text-danger">
+                                {%if forloop.counter == 2%}
+                            {% if state %} {{state}} {%endif%}
+                                {%endif%}
+                                
+                            <div>
+                                {% if field.errors%}
+                                    {%for err in field.errors %}
+            
+                                    <div class="left-space">
+                                        {{err}}
+                                    </div>
+                                    
+                                    {%endfor%}
+                                {%endif%}
+                            </div>
+
+
+                            </div>
+                        </div>
+                    {%endfor%}
+{% endblock %}

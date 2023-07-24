@@ -1,0 +1,120 @@
+{% extends "main.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load thousands %}
+
+{% block content %}
+
+            <section class="s-p-m">
+                {% include "base/nav.html" with org="s-p-m-or"%}
+            </section>
+            <section class="p-d-b-s" onclick="hideCart()">
+                <div class="s-p-c s-p-c-d">
+                
+                    <div class="post-info detail-header">
+    
+                    </div>
+                    <div class="post-info">
+                        <div class="product-options d-flex flex-column">
+                            <div class="product-detail-options">
+                                <div class="p-title-d">
+                                    <h3 class="font-lg">
+                                        {{post.name}}
+                                    </h3>
+                                </div>
+                                <div class="p-price-d d-flex jc-end grow-1 mt-2 mb-2">
+                                    <span class="price-span"><span>{{post.price|sepp:"fa"}}</span><span class="rls">ریال </span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>اندازه :</span>
+                                    <span>{{ post.size }}</span>
+                                </div>
+                            </div>
+                            <div class="add-t-cart">
+                                <div>
+                                    {% if post.is_avail%}
+                                    <form method="post" class="ord-f"  action="{% url 'detail_view_url' pk=post.id %}" data novalidate>
+                                        {% csrf_token %}
+
+                                        <div class="form-c-d">
+                                            <div>
+                                                <div>
+                                                    {{ form.s }}
+                                                </div>
+
+                                            </div>
+
+                                            <div>
+                                                <div>
+                                                    <span>{{ form.pot.label }}</span>
+                                                    {% render_field form.pot class="p-s-w-s" title="ابتدا گلدان مورد نظر را به سبد خرید اضافه کنید و سپس این سفارش را نهایی کنید، همچنین میتوانید پس از نهایی کردن این سفارش گلدان مورد نظر را از سفارش های جاری تغییر دهید"%}
+                                                </div>
+                                                <div>
+                                                    {% for field in form.pot.errors %}
+                                                    <div>
+                                                        <p>{{ field }}</p>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="p-q-s-s">
+                                                    <span>{{ form.quantity.label }}</span>{% render_field form.quantity %}
+                                                </div>
+                                                {% if form.quantity.errors %}
+                                                <div>
+                                                    {% for field in form.quantity.errors %}
+                                                <div class="f-e-d">
+                                                    <p>{{ field }}</p>
+                                                </div>
+                                                    {% endfor %}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            <div>
+                                                <div class="d-f-s-b">
+                                                    <button type="submit" class="btnform-s">افزودن به سبد خرید</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    {%else %}
+                                    <div class="form-c-d p-3">
+                                        <span class="">موجودی این محصول به اتمام رسیده است.</span>
+                                    </div>
+                                    {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-pic">
+                            <div class="product-img-d">
+                                <img class="p-d-i-s p-img-p" src="{{ post.img.url }}" width="100%" height="100%"
+                                id="main_img_l">
+                            </div>
+                            <div class="product-images-slider">
+                                {% if pics|length > 1 %}
+                                    {% for p in pics %}
+                                <div class="slider-pic">
+                                    <img class="p-s-p-i" src="{{ p.img.url }}" height="100%" width="100%"
+                                        onclick="largeImg('{{p.img.url}}')" >
+                                </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="product-details">
+                                <div class="desc-p">
+                                    <p class="">{{post.caption}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+
+
+                </div>
+            </section>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% for factor in factors %}
+    {%if factor.orders.all%}
+<table class="f-t-m">
+        <tbody class="d-flex o-d-t-h">
+            <tr class="t-g">
+                
+                <td class="p-name">فاکتور ({{factor.factor_n}})</td>
+                <td class="p-price-p">در حال رسیدگی</td>
+                <td class="p-quantity">پرداخت شده</td>
+                <td class="p-subtotal">ارسال شده</td>
+                <td class="p-total-f">تاریخ</td>
+            </tr>
+        
+        <div id="t-c">
+
+
+    {% for p in factor.orders.all %}
+         <tr class="t-g">
+           
+             <td class="p-thumbnail">
+                 <a href="">
+                     <div>
+                         <p>{%if not p.product%}{{p.pot}}{%else%}{{p.product}}{%endif%}</p>
+                     </div>
+                 </a>
+             </td>
+             <td class="p-name">{% if p.is_paid %}✓{% else %}☒{% endif %}</td>
+             <td class="p-price">{% if p.is_paid %}✓{% else %}☒{% endif %}</td>
+             <td class="p-price">{% if p.is_sent %}✓{% else %}☒{% endif %}</td>
+             <td class="p-subtotal">{{ p.date }}</td>
+{#            {% if forloop.last %}<td>{{ factor.factor_final_price }}</td>{% endif %}#}
+         </tr>
+
+    {% endfor %}
+
+        </div>
+    </tbody>
+</table>
+    {%endif%}
+{% endfor %}

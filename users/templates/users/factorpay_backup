@@ -1,0 +1,146 @@
+{% extends "main.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load widget_tweaks %}
+{% block content %}
+
+            <section class="s-p-m">
+                {% include "base/nav.html" %}
+            </section>
+            <section class="p-d-b-s" onclick="hideCart()">
+                <div class="s-p-c s-p-c-d">
+                    {% if user.is_authenticated %}
+                        <div class="lgn-spacer">
+
+                        </div>
+                        <div class="form-cont-main-factor">
+
+                            <table class="f-t-m">
+                                <thead>
+                                    <tr class="">
+                                        <td class="p-remove"> </td>
+                                        <td class="p-thumbnail"></td>
+                                        <td class="p-name">محصول </td>
+{#                                        <th>گلدان</th>#}
+                                        <td class="p-price-p"> قیمت  </td>
+                                        <td class="p-quantity">  تعداد  </td>
+                                        <td class="p-subtotal">   جمع جزء </td>
+                                        <td class="p-total"> جمع کل  </td>
+                                        <td>تایید تغییرات</td>
+                                                    {% if forloop.last %}<td>{{ t }}<td>{% endif %}
+                                    </tr>
+                                </thead>
+                                <tbody id="t-c">
+                                {% for p in factor %}
+                                    <tr class="">
+                                     <td class="p-remove"><a href="{% url 'delete_order_url' slug=p.id %}">×</a></td>
+                                     <td class="p-thumbnail">
+                                         <a href="{% if not p.product %}{% url 'pot_detail_url' pk=p.pot.id %}
+                                                   {% else %}{% url 'detail_view_url' pk=p.product.id %}{% endif %}">
+                                             <div class="f-img-s">
+                                                 <img class="p-i-f-v" src="{% if not p.product %}{{ p.pot.img.url }}{% else %}{{p.product.img.url}}{% endif %}" width="100%" height="100%">
+                                             </div>
+                                         </a>
+                                     </td>
+                                     <td class="p-name">
+{#                                         <a href="{% if not p.product %}{% url 'pot_detail_url' pk=p.pot.id %}#}
+{#                                                    {% else %}{% url 'detail_view_url' pk=p.product.id %}{% endif %}">#}
+                                             <div>
+                                                 {% if not p.product %}<a href="{% url 'pot_detail_url' pk=p.pot.id %}"><span>{{ p.pot.name }}</span></a>
+                                                 {% else %}
+                                                     <div>
+                                                        <a href="{% url 'detail_view_url' pk=p.product.id %}"><span>{{ p.product.name }}</span><span class="p-s-e-s">({{ p.product.size }})</span></a>
+                                                     </div>
+                                                     {% if p.pot is not none %}
+                                                     <div class="s-i-d">
+                                                         <a href="{% url 'pot_detail_url' pk=p.pot.id%}">
+                                                         <img class=" p-i-f-v" src="{{p.pot.img.url}}" width="35px" height="35px">
+                                                        </a>
+                                                     </div>
+                                                     {% endif %}
+                                                 {% endif %}
+                                             </div>
+                                         </a>
+                                     </td>
+                                     <td class="p-price">{% if not p.product %}
+                                         {{ p.pot.price }} <span class="small"> تومان</span>
+                                         {% else %}
+                                         {{ p.product.price }}{% if p.pot %}(+{{ p.pot.price }}){% endif %} <span class="small"> تومان</span>
+                                         {% endif %}
+                                     </td>
+                                     <td class="p-quantity">
+                                         <div class="p-q-e-d">
+{#                                         <form method="post" class="p-f-f">#}
+{#                                            {% csrf_token %}#}
+{#                                             {% render_field form.quantity value="{{ p.quantity }}" %}#}
+                                             <div>
+                                                <input class="p-f-q-p" id="pi{{ p.id }}" name="p{{ p.id }}" type="number" value="{{ p.quantity }}" title="برای اعمال تغییرات، دکمه تیک را بفشارید">
+                                             </div>
+
+                                             {#                                         </form>#}
+                                         </div>
+                                     </td>
+                                     <td class="p-subtotal">{{ p.final_price }}</td>
+                                     <td class="services-p-p">
+                                        <div class="p-q-e-d p-q-e-d-s">
+                                            {% if p.product %}
+                                            <div>
+                                              <span>تعویض گلدان</span><span></span>
+                                                <div class="s-i-d">
+                                                <input onclick="pPick('{{ p.id }}')" type="checkbox" {% if p.change_pot %}checked{% endif %} class="p-f-q-p" id="pcp{{ p.id }}" title="برای اعمال تغییرات، دکمه تیک را بفشارید">
+                                                </input>
+                                                </div>
+                                            </div>
+                                            <div>
+                                              <span>تعویض خاک</span>
+                                                <div class="s-i-d">
+                                                <input onclick="soPick('{{ p.id }}')" type="checkbox" {% if p.change_soil %}checked{% endif %} class="p-f-q-p" id="pcs{{p.id}}"
+                                                        title="برای اعمال تغییرات، دکمه تیک را بفشارید">
+                                             </div>
+                                            </div>
+                                        {% endif %}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="p-q-e-d">
+                                            <div class="btnad btnad{{ p.id }}">
+    {#                                                <button class="btn btn-light f-f-p-s" type="submit" onclick="editOrder('{{p.id}}')">#}
+    {#                                                                        hell#}
+    {#                                                </button>#}
+
+                                                     <div class="f-f-p-s" onclick="editOrder('{{p.id}}')">
+                                                        <div class="tick-div " ><p class="tick-p">✓</p></div>
+                                                     </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                        {#            {% if forloop.last %}<td>{{ t }}</td>{% endif %}#}
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        </td><td class="">{% if forloop.last %}<p class="hve" onclick="cAddress()">ادامه</p>{% endif %}</td><td></td><td></td><td></td><td></td>
+                                    {% if forloop.last %}<td class="t-t-r">{{ t }} <span class="small">تومان</span></td>{% endif %}
+
+                                    </tr>
+
+                                {% endfor %}
+                                </table>
+                            </div>
+
+
+                        </div>
+
+
+                        </div>
+
+                        <div class="lgn-spacer">
+
+                        </div>
+                    {% endif %}
+
+                </div>
+            </section>
+
+{% endblock %}
+
+

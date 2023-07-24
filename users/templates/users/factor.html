@@ -1,0 +1,68 @@
+{% for factor in factors %}
+    {%if factor.orders.all%}
+<table class="f-t-m">
+        <thead>
+            <tr>
+                <th class="p-thumbnail"></th>
+                <th class="p-name">محصول</th>
+                <th class="p-price-p">قیمت</th>
+                <th class="p-quantity">تعداد</th>
+                <th class="p-subtotal">جمع جزء</th>
+                <th class="p-total-f">جمع کل </th>
+            </tr>
+        </thead>
+        <tbody id="t-c">
+
+
+    {% for p in factor.orders.all %}
+         <tr>
+             <td class="p-thumbnail">
+                 <a href="{% if p.pot %}{% url 'pot_detail_url' pk=p.product.id %}
+                           {% else %}{% url 'detail_view_url' pk=p.product.id %}{% endif %}">
+                     <div class="f-img-s">
+                        <img class="p-i-f-v" src="{% if not p.product %}{{ p.pot.img.url }}{% else %}{{ p.product.img.url }}{% endif %}" width="100%" height="100%">
+                     </div>
+                 </a>
+             </td>
+             <td class="p-name">
+                    <a href="{% if not p.product %}{% url 'pot_detail_url' pk=p.pot.id %}
+                        {% else %}{% url 'detail_view_url' pk=p.product.id %}{% endif %}">
+                        <div>
+                            {% if not p.product %}<span>{{ p.pot.name }}</span>
+                            {% else %}
+                                <div>
+                                    <span>{{ p.product.name }}</span>
+                                </div>
+                                {% if p.pot is not none %}
+                                <div class="s-i-d">
+                                    <span></span>
+                                    <a href="{% url 'pot_detail_url' pk=p.pot.id%}">
+                                        <img class=" p-i-f-v" src="{{ p.pot.img.url }}" width="55px" height="55px">
+                                    </a>
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </a>
+                </td>
+             <td class="p-price">{% if not p.product %}
+                 {{ p.pot.price }} <span class="small"> تومان</span>
+                    {% else %}
+                 {{ p.product.price }}{% if p.pot %}(+{{ p.pot.price }}){% endif %} <span class="small"> تومان</span>
+                {% endif %}
+             </td>
+             <td class="p-quantity">{{ p.quantity }}</td>
+             <td class="p-subtotal">{{ p.final_price }}</td>
+{#            {% if forloop.last %}<td>{{ factor.factor_final_price }}</td>{% endif %}#}
+         </tr>
+        <tr><td></td><td></td><td></td><td></td><td></td>
+            {% if forloop.last %}<td><di>{{ factor.factor_final_price }} <span class="small">تومان</span></di></td>{% endif %}
+
+            </tr>
+
+    {% endfor %}
+
+        </tbody>
+    </table>
+    {%endif%}
+{% endfor %}

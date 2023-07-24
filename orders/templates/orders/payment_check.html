@@ -1,0 +1,168 @@
+{#{% extends "main.html" %}#}
+{% load static %}
+
+{#{% block content %}#}
+
+<div>
+
+    <div>
+        <div class="a-u-a-f f-t-m">
+            <div class="u-a-f-d ">
+
+                <div>
+                    <p class="u-a-f-l u-a-f-p u-a-f-t">آدرس</p>
+                </div>
+                <div class="u-a-f ">
+                    {{ address.address }}
+                </div>
+            </div>
+
+            <div class="u-a-f-d">
+                <div>
+                    <p class="u-a-f-l u-a-f-p u-a-f-t">کد پستی</p>
+                </div>
+                <div class="u-a-f">
+                    {{ address.postal_code }}
+                </div>
+            </div>
+
+            <div class="u-a-f-d u-a-f-d-f">
+                <div class="u-a-e-s">
+                    <div class="u-a-b-n">
+                        <div>
+                            <p class="u-a-f-p u-a-f-t">پلاک <span>{{ address.block }}</span></p>
+                        </div>
+                    </div>
+                    <div class="u-a-b-n">
+                        <div>
+                            <p class="u-a-f-p u-a-f-t">واحد <span>{{ address.N }}</span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <table class="f-t-m">
+            <thead>
+                <tr>
+                    <th class="p-thumbnail"></th>
+                    <th class="p-name">محصول</th>
+                    <th class="p-price-p">قیمت</th>
+                    <th class="p-quantity">تعداد</th>
+                    <th class="p-subtotal">جمع جزء</th>
+                    <th class="p-total"> جمع کل</th>
+
+                    {% if forloop.last %}<td>{{ t }}
+                    <td>{% endif %}
+                </tr>
+            </thead>
+            <tbody id="t-c">
+                {% for p in orders %}
+                <tr>
+                    <td class="p-thumbnail">
+                        <a href="{% if not p.product %}{% url 'pot_detail_url' pk=p.pot.id %}
+                                                {% else %}{% url 'detail_view_url' pk=p.product.id %}{% endif %}">
+                            <div class="p5">
+                                <img class="p-i-f-v" src="{% if not p.product %}{{ p.pot.img.url }}{% else %}
+                                                {{ p.product.img.url }}
+                                                {% endif %}" width="55px" height="55px">
+                            </div>
+                        </a>
+                    </td>
+                    <td class="p-name p5">
+
+                        <div class="p5">
+                            {% if not p.product %}<a href="{% url 'pot_detail_url' pk=p.pot.id %}"><span>{{
+                                    p.pot.name }}</span></a>
+                            {% else %}
+                            <div>
+                                <a href="{% url 'detail_view_url' pk=p.product.id %}"><span>{{ p.product.name}}</span><span class="p-s-e-s">({{ p.product.size }})</span></a>
+                            </div>
+                            {% if p.pot is not none %}
+                            <div class="s-i-d">
+                                <a href="{% url 'pot_detail_url' pk=p.pot.id%}">
+                                    <img class=" p-i-f-v" src="{{ p.pot.img.url }}" width="35px" height="35px">
+                                </a>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        </a>
+                    </td>
+                    <td class="p-price p5">{% if not p.product %}
+                        {{ p.pot.price }} <span class="small"> تومان</span>
+                        {% else %}
+                        {{ p.product.price }}{% if p.pot %}(+{{ p.pot.price }}){% endif %} <span class="small">
+                            تومان</span>
+                        {% endif %}
+                    </td>
+                    
+                    <td class="p-subtotal p5">{{ p.final_price }}</td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    {% if forloop.last %}<td class="t-t-r">
+                        <di>{{ t }} <span class="small">تومان</span></di>
+                    </td>{% endif %}
+
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <form method="post" action="" id="checkpay">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="add-post-field">
+                <div class="add-post-label">
+                    {{field.label_tag}}
+                    {{field}}
+                </div>
+                <div class="add-post-errors text-danger">
+                    {%if forloop.counter == 2%}
+                    {% if state %} {{state}} {%endif%}
+                    {%endif%}
+
+                    <div>
+                        {% if field.errors%}
+                        {%for err in field.errors %}
+
+                        <div class="left-space">
+                            {{err}}
+                        </div>
+
+                        {%endfor%}
+                        {%endif%}
+                    </div>
+
+
+                </div>
+            </div>
+            {%endfor%}
+
+            <div class="address-div">
+                <button type="button" onclick="checkPay('{{ address.postal_code }}')"
+                    class="viewbtn g-hv">تایید</button>
+                {# <a href="{% url 'factor_pay_url' %}">#}
+                    <button type="button" onclick="cCard()" class="viewbtn">
+                        <span>ویرایش</span>
+                    </button>
+                    {# </a>#}
+
+            </div>
+        </form>
+    </div>
+
+</div>
+{#{% endblock %}#}

@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div>
+    {%if sts == "true"%}<span>payment done</span>
+    {% elif sts == "payment used before"%}<span>you used thsi before</span>
+    {% elif sts == "alreadyverified"%}<span>verified before</span>
+    {%elif sts == "false"%}<span>payment not done</span>
+    {%endif%}
+</div>
+
+
+{% endblock %}

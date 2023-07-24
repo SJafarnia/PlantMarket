@@ -1,0 +1,64 @@
+{% extends "main.html" %}
+{% load static %}
+{% load thousands %} 
+
+{% block content %}
+
+            <section class="s-p-m">
+                {% include "base/nav.html" with org="s-p-m-or"%}
+            </section>
+            <div class="p-l-t"><h1> گل ها</h1></div>
+            <div class="s-p-c" onclick="hideCart()">
+                
+            <div class="n-p-l-s-s">
+                <div class="s-f-m-s">
+                    
+                </div>
+                <div class="n-p-l-s-s">
+
+                    <div class="p-group">
+                        {% for post in posts %}
+                        <div class="adj">
+                            <a href="{% url 'detail_view_url' pk=post.id %}">
+                                <div class="p-media">
+                                    <img src="{{post.img.url}}" class="n-p-i-i">                          
+                                    <div class="card-txt">
+                                        <div class="pnamec"><span class="name-span res-p">{{post.name}}</span></div>
+                                        <div class="ppricec"><span class="price-span res-p"> {{post.price|sepp:"fa"}}</span><span class="rls">ریال</span></div>
+                                    </div>
+                                    
+                                </div>
+
+                            </a>
+                            
+                            <div class="p-f">
+                                <div class="d-flex flex-column p-p-l-i">
+                                    <a href="{% url 'detail_view_url' pk=post.id %}">
+                                        <div class="p-title">
+                                            <span class="name-span res-p">{{ post.name}}</span>
+                                        </div>
+                                    </a>
+                                    <div class="p-price">
+                                        <span class="price-span res-p"> {{post.price |sepp:"fa"}}</span><span class="rls">ریال </span>
+                                    </div>
+                                </div>
+                                <!-- <div class="btn-div">
+                                    <a href="{% url 'detail_view_url' pk=post.id %}">
+                                        <button type="button" class="viewbtn">مشاهده</button>
+                                    </a>
+                                </div> -->
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+
+
+
+        
+                </div>
+
+
+        </div>
+        </div>
+{% endblock %}

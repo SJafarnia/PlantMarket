@@ -1,0 +1,143 @@
+{% extends "main.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+
+            <section class="s-p-m">
+                {% include "base/nav.html" with org="s-p-m-or"%}
+            </section>
+            <section class="p-d-b-s" onclick="hideCart()">
+                <div class="s-p-c s-p-c-d">
+                <div class="lgn-spacer">
+
+                </div>
+                    {% if user.is_authenticated %}
+                        <div class="user-info-main">
+
+                        <div class="user-cont">
+                                <div class="details-user user-main-item dropdown" onmouseleave="slideUp('u')">
+                                        <span onclick="dropDown('u')" onmouseover="dropDown('u')">اطلاعات کاربر</span>
+                                        <div class="addresses dropdown-content dropdown-content-u">
+                                            <span onclick="editProfile()">حساب کاربری</span>
+                                        </div>
+                                        <div class="edit-user-id-n-info dropdown-content dropdown-content-u">
+                                            <span onclick="showAddresses()">آدرس ها</span>
+                                        </div>
+                                        <div class="edit-user-pic dropdown-content dropdown-content-u">
+                                            <span>تغییر پروفایل</span>
+                                        </div>
+                                </div>
+                                <div class="user-orders user-main-item dropdown" onmouseleave="slideUp('h')">
+                                    <span onclick="dropDown('h')" onmouseover="dropDown('h')" >سفارش ها</span>
+                                    <div class="edit-order dropdown-content dropdown-content-h">
+                                        <span onclick="showFactor()">تاریخچه سفارش</span>
+                                    </div>
+                                    <div class="order-status dropdown-content dropdown-content-h">
+                                        <div>
+                                            <span onclick="showFactorDetails()">وضعیت سفارش</span>
+                                        </div>
+                                    </div>
+                                    <div class="order-details-payments dropdown-content dropdown-content-h">
+                                        <span>فاکتور ها</span>
+                                    </div>
+
+                                </div>
+                                <div class="user-favs user-main-item dropdown" onmouseleave="slideUp('f')">
+                                    <span onclick="dropDown('f')" onmouseover="dropDown('f')" >مورد علاقه ها</span>
+{#                                    <div class="fav-list dropdown-content dropdown-content-f">#}
+{##}
+{#                                    </div>#}
+                                </div>
+
+                                <div class="user-tickets user-main-item dropdown" onmouseleave="slideUp('s')">
+                                    <span onmouseover="dropDown('s')" onclick="dropDown('s')">پشتیبانی و ارسال تیکت</span>
+
+                                </div>
+
+
+                        </div>
+                        <div class="ajx-div">
+<div class="lgn-form">
+
+    <form action="{% url "edit_a_url" %}" method="post" class="a-u-a-f">
+
+        {% csrf_token %}
+{#        <input id="hId" type="hidden" contenteditable="false" value="{{ obj }}">#}
+        {% render_field form.id value="{{ obj }}"%}
+                <div class="u-a-f-d">
+
+                    <div class="u-a-f-t">
+                        <p class="u-a-f-l u-a-f-p">{{ form.address.label }}</p>
+                    </div>
+                    <div class="u-a-f">
+                        {% render_field form.address class="f-s-p-c" %}
+                    </div>
+                    <div class="u-a-f">
+                        {% for err in form.address.errors %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="u-a-f-d">
+                    <div class="u-a-f-t">
+                        <p class="u-a-f-l u-a-f-p">{{ form.postal_code.label }}</p>
+                    </div>
+                    <div class="u-a-f">
+                        {% render_field form.postal_code class="f-s-p-c" %}
+                    </div>
+                    <div class="u-a-f">
+                        {% for err in form.postal_code.errors %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="u-a-f-d u-a-f-d-f">
+                    <div>
+                        <div class="u-a-f-t">
+                            <p class="u-a-f-p">{{ form.block.label }}</p>
+                        </div>
+                        <div class="u-a-f">
+                            {% render_field form.block class="f-s-p-c" %}
+                        </div>
+                        <div class="u-a-f">
+                        {% for err in form.block.errors %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    </div>
+                    <div>
+                        <div class="u-a-f-t">
+                            <p class="u-a-f-p">{{ form.N.label }}</p>
+                        </div>
+                        <div class="u-a-f">
+                            {% render_field form.N class="f-s-p-c"%}
+                        </div>
+                        <div class="u-a-f">
+                        {% for err in form.N.errors %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+                <div class="u-a-f-s">
+                    <button type="submit" class="btn btn-light"> اعمال</button>
+                </div>
+    </form>
+</div>
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                <div class="lgn-spacer">
+
+                        </div>
+                </div>
+            </section>
+
+{% endblock %}
+
+

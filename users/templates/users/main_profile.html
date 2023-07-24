@@ -1,0 +1,73 @@
+{% extends "main.html" %}
+{% load static %}
+
+
+{% block content %}
+
+            <section class="s-p-m">
+                {% include "base/nav.html" with org="s-p-m-or"%}
+            </section>
+            <section class="p-d-b-s" onclick="hideCart()">
+                <div class="s-p-c s-p-c-d">
+                <div class="lgn-spacer">
+
+                </div>
+                    {% if user.is_authenticated %}
+                        <div class="user-info-main">
+
+                        <div class="user-cont">
+                                <div class="details-user user-main-item dropdown">
+                                        <span onclick="dropDown('u')">اطلاعات کاربر</span>
+                                        <div class="addresses d-d-d-c dropdown-content dropdown-content-u">
+                                            <span onclick="editProfile()">حساب کاربری</span>
+                                        </div>
+                                        <div class="edit-user-id-n-info d-d-d-c dropdown-content dropdown-content-u">
+                                            <span onclick="showAddresses()">آدرس ها</span>
+                                        </div>
+                                        <div class="edit-user-pic d-d-d-c dropdown-content dropdown-content-u">
+                                            <span>تغییر پروفایل</span>
+                                        </div>
+                                </div>
+                                <div class="user-orders user-main-item dropdown">
+                                    <span onclick="dropDown('h')" >سفارش ها</span>
+                                    <div class="edit-order dropdown-content dropdown-content-h">
+                                        <span onclick="showFactor()">تاریخچه سفارش</span>
+                                    </div>
+                                    <div class="order-status dropdown-content dropdown-content-h">
+                                        <div>
+                                            <span onclick="showFactorDetails()">وضعیت سفارش</span>
+                                        </div>
+                                    </div>
+                                    <div class="order-details-payments dropdown-content dropdown-content-h">
+                                        <span>فاکتور ها</span>
+                                    </div>
+
+                                </div>
+                                <div class="user-favs user-main-item dropdown">
+                                    <span onclick="dropDown('f')" >مورد علاقه ها</span>
+{#                                    <div class="fav-list dropdown-content dropdown-content-f">#}
+
+{#                                    </div>#}
+                                </div>
+
+                                <div class="user-tickets user-main-item dropdown">
+                                    <span onclick="dropDown('s')">پشتیبانی و ارسال تیکت</span>
+
+                                </div>
+
+
+                        </div>
+                        <div class="ajx-div">
+
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                <div class="lgn-spacer">
+
+                        </div>
+                </div>
+            </section>
+
+{% endblock %}

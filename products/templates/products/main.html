@@ -1,0 +1,127 @@
+{% extends "main.html" %}
+{% load static %}
+{% load thousands %}
+
+{% block content %}
+
+            <section class="b-p-s">
+                {% include "base/nav.html" %}
+                <div class="b-p" onclick="hideCart()">
+                    <div class="tst tst1">
+                        <!-- <p>گل و گیاه</p> -->
+                        <span>گل</span>
+                        <span>و</span>
+                        <span>گیاه</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="_3d64y">
+                <div class="n-p">
+                    <h1 class="n-i-t">
+                        جدید ترین محصولات
+                    </h1>
+                </div>
+            </section>
+            
+            <section class="n-p-l-s">
+                <div class="n-p-l">
+                    {% for p in news %}
+                    
+                        <div class="adj">
+                            <a href="{% url 'detail_view_url' pk=p.id %}">
+                                <div class="p-media">
+                                    <img src="{{p.img.url}}" class="n-p-i-i" alt="خرید آنلاین گل و گیاه">                          
+                                    <div class="card-txt">
+                                        <div class="pnamec"><span class="name-span res-p">{{p.name}}</span></div>
+                                        <div class="ppricec"><span class="price-span res-p"> {{p.price|sepp:"fa"}}</span><span class="rls">ریال</span></div>
+                                    </div>
+                                    
+                                </div>
+                            </a> 
+
+                            <div class="p-f">
+                                <div class="d-flex flex-column p-p-l-i">
+                                    <a href="{% url 'detail_view_url' pk=p.id %}">
+                                        <div class="p-title">
+                                            <span class="name-span res-p">{{ p.name }}</span>
+                                        </div>
+                                    </a>
+                                    <div class="p-price">
+                                        <span class="price-span res-p"> {{ p.price|sepp:"fa"}}</span><span class="rls">ریال </span>
+                                    </div>
+                                </div>
+                                <!-- <div class="btn-div">
+                                    <a href="{% url 'detail_view_url' pk=p.id %}">
+                                        <button type="button" class="viewbtn mbtn">مشاهده</button>
+                                    </a>
+                                </div> -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+            </section>
+
+            <section class="_3d64y">
+                
+            </section>
+
+            <section class="spacer">
+                <div class="b-p">
+                    <div class="tst tst2">
+                        <div>
+                            <span>
+                                از دانه تا جوانه 
+                            </span>
+                        </div>
+                        <div>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="spcer">
+                <div class="d-flex flex-row justify-content-between bvcxb">
+                    <div class="p-d-s-s">
+                        <div class="b-p o-b-p">
+                            <div class="o-a-t">
+                                <div class="">
+                                    <div  class="o-a-t-t">
+                                        <h4>
+                                            چیزی به نام گلدان اضافی وجود ندارد
+                                        </h4>
+                                    </div>
+                                    <div class="o-a-t-t">
+                                        <h4>
+                                            خرید استثنایی را با ما تجربه کنید
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="o-a-p">
+                                <div class="o-a-p-d">
+                                    <img src="{% static 'media/Rose_flower.svg.png' %}"
+                                        width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="o-a-p">
+                                <div class="o-a-p-d">
+                                    <img src="{% static 'media/cactus-svgrepo-com.png' %}"
+                                    width="100%" height="100%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-d-s">
+                        <img src="{% static 'media/ccc.png' %}" class="c-p" width="100%" height="100%">
+
+                    </div>
+
+                </div>
+            </section>
+
+
+
+{% endblock %}

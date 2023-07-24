@@ -1,0 +1,48 @@
+{% for i  in addresses %}
+<div class="a-u-a-f f-t-m">
+                <div class="u-a-f-d">
+
+                    <div>
+                        <p class="u-a-f-l u-a-f-p u-a-f-t">آدرس</p>
+                    </div>
+                    <div class="u-a-f">
+                        {{ i.address }}
+                    </div>
+                </div>
+
+                <div class="u-a-f-d">
+                    <div>
+                        <p class="u-a-f-l u-a-f-p u-a-f-t">کد پستی</p>
+                    </div>
+                    <div class="u-a-f">
+                        {{ i.postal_code }}
+                    </div>
+                </div>
+
+                <div class="u-a-f-d u-a-f-d-f">
+                    <div class="u-a-e-s">
+                        <div class="u-a-b-n">
+                            <div>
+                                <p class="u-a-f-p">پلاک <span>{{ i.block }}</span></p>
+                            </div>
+                        </div>
+                        <div class="u-a-b-n">
+                                <div>
+                                    <p class="u-a-f-p">واحد <span>{{ i.N }}</span></p>
+                                </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="e-a-s-d">
+                        <span class="e-a-s" onclick="editAddress('{{ i.id }}')">ویرایش</span>
+                        </div>
+                    </div>
+                </div>
+</div>
+{% endfor %}
+<div class="f-t-m a-u-a-f">
+    <div class="u-a-f">
+        <button type="button" class="viewbtn nopad" onclick="addAddress()">ثبت آدرس جدید</button>
+    </div>
+
+</div>

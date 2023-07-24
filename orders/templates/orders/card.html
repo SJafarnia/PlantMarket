@@ -1,0 +1,49 @@
+{% if orders%}
+<table>
+        <thead>
+            <tr>
+                <th class="p-remove"> </th>
+                <th class="p-thumbnail"></th>
+                <th class="p-name">محصول</th>
+                <th class="p-price-p">قیمت</th>
+                <th class="p-quantity">تعداد</th>
+                <th class="p-subtotal">جمع جزء</th>
+            </tr>
+        </thead>
+        <tbody id="t-c">
+
+            {% for p in orders %}
+             <tr>
+                            <td class="p-remove"><a href="{% url 'delete_order_url' slug=p.id %}">×</a></td>
+                            <td class="p-thumbnail">
+                                <a href="{% if not p.product %}{% url 'pot_detail_url' pk=p.pot.id %}
+                                {% else %}{% url 'detail_view_url' pk=p.product.id %}{% endif %}">
+                                    <div>
+                                        <img src="{% if not p.product %}{{ p.pot.img.url }}{% else %}{{ p.product.img.url }}{% endif %}" width="35px" height="35px">
+                                    </div>
+                                </a>
+                            </td>
+                            <td class="p-name">
+                                <a href="{% if not p.product %}{% url 'pot_detail_url' pk=p.pot.id %}
+                                {% else %}{% url 'detail_view_url' pk=p.product.id %}{% endif %}">
+                                    <div>
+                                        <span>{% if not p.product %}{{ p.pot.name }}{% else %}{{ p.product.name }}{% endif %}</span>
+                                    </div>
+                                </a>
+                            </td>
+                            <td class="p-price">{% if not p.product %}{{ p.pot.price }}{% else %}{{ p.product.price }}{% endif %} <span class="small"> تومان</span></td>
+                            <td class="p-quantity">{{ p.quantity }}</td>
+                            <td class="p-subtotal">{{ p.final_price }}</td>
+                        </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% if orders %}
+    <div>
+        <a href="{% url 'factor_pay_url' %}">
+            <p class="p-p-ite">تسویه حساب</p>
+        </a>
+    </div>
+{% endif %}
+{%else%}<div> <span>محصولی یافت نشد!</span></div>
+{%endif%}

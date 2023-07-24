@@ -1,0 +1,70 @@
+{% extends "main.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+            <section class="s-p-m">
+                {% include "base/nav.html" with org="s-p-m-or"%}
+            </section>
+            <section class="p-d-b-s" onclick="hideCart()">
+                <div class="s-p-c s-p-c-d">
+{#                    {% if user.is_authenticated %}#}
+                        <div class="lgn-spacer">
+
+                        </div>
+                        <div class="form-cont-main">
+                                <div class="lgn-form">
+                                <form method="post" novalidate>
+                                {% csrf_token %}
+
+                                        <div class="form-group-m">
+
+                                        {% render_field form.username placeholder="نام کاربری" class="c-f-c" type="text" title="شماره تلفن یا ایمیل" %}
+                                            {% for error in form.username.errors %}
+
+                                            <div class="form-err">
+                                                <p>{{ error }}</p>
+
+                                            </div>
+                                            {% endfor %}
+
+
+                                        </div>
+                                        <div class="form-group-m">
+
+                                        {% render_field form.password class="c-f-c" placeholder="رمز عبور" type="text" %}
+
+                                                {% for error in form.password.errors %}
+                                                 <div class="form-err"><p>{{ error }}</p></div>
+                                                {% endfor %}
+
+
+
+                                        </div>
+                                        <div class="form-group-m">
+                                            <button type="submit" class="btn btn-light">ورود</button>
+                                        </div>
+                                        <div class="l-s-d">
+                                            <span class="s-p-s">حساب کاربری ندارید؟</span><span onclick="signUp()" class="s-p-s" ">(ثبت نام)</span>
+                                        </div>
+
+                                </form>
+                                </div>
+                                <div class="lgn-pic-div">
+                                    <img class="lgn-pic" src="{% static "media/ccc.png"%}" width="100%" height="100%">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="lgn-spacer">
+
+                        </div>
+{#                    {% endif %}#}
+
+                </div>
+            </section>
+
+{% endblock %}

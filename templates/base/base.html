@@ -1,0 +1,27 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> خرید آنلاین گل و گیاه 
+        {% block header_title %} {% endblock %}</title>
+    {% include "ref/header.html" %}
+
+</head>
+
+<body>
+
+    <div class="main">
+
+        <div class="root">
+        {% block content %}{% endblock %}
+        </div>
+
+    {% include "ref/footer.html" %}
+    {% block footer %}
+
+    {% endblock %}
+    </div>
+</body>
+</html>

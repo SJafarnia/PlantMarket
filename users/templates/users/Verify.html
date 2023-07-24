@@ -1,0 +1,35 @@
+
+{% load static %}
+{% load widget_tweaks %}
+
+
+                            <div class="lgn-form" id="vrf-d">
+                                    <form  action="" method="post" novalidate id="s-u-form">
+                                {% csrf_token %}
+                                        {% render_field form.userId id="uid"  value=userid %}
+                                        <div class="form-group-m">
+                                        {% render_field form.code placeholder="کد" class="c-f-c" type="text" %}
+                                            <div class="form-err">
+                                                {% for error in form.code.errors %}
+                                                <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+{#                                        <input type="hidden" name="userId" id="uid" value="{{ userid }}" contenteditable="false">#}
+
+                                        <div class="form-group-m">
+                                            <button type="submit" class="btn btn-light">تایید</button>
+                                        </div>
+
+                                </form>
+                                    <div>
+                                        <div class="c-t-d">
+                                            <span onclick="resendSms()" id="resender"></span><span class="wait-txt">ثانیه تا ارسال مجدد کد صبر کنید. </span>
+                                        </div>
+                                        <div>
+                                            <div id="progressbar">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>

@@ -1,0 +1,78 @@
+{% load widget_tweaks %}
+
+<div class="lgn-form">
+
+    <form  method="post" class="a-u-a-f" novalidate>
+
+        {% csrf_token %}
+            {% render_field form.id value="{{ obj }}"%}
+                <div class="u-a-f-d">
+
+                    <div class="u-a-f-t">
+                        <p class="u-a-f-l u-a-f-p">{{ form.address.label }}</p>
+                    </div>
+                    <div class="u-a-f">
+                        {% render_field form.address class="f-s-p-c" %}
+                    </div>
+                    {%if form.address.errors%}
+                    <div class="u-a-f mt-2">
+                        {% for err in form.address.errors %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="u-a-f-d">
+                    <div class="u-a-f-t">
+                        <p class="u-a-f-l u-a-f-p">{{ form.postal_code.label }}</p>
+                    </div>
+                    <div class="u-a-f">
+                        {% render_field form.postal_code class="f-s-p-c" %}
+                    </div>
+                    {%if form.postal_code.errors%}
+                    <div class="u-a-f mt-2">
+                        {% for err in form.postal_code.errors %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="u-a-f-d u-a-f-d-f">
+                    <div>
+                        <div class="u-a-f-t">
+                            <p class="u-a-f-p">{{ form.block.label }}</p>
+                        </div>
+                        <div class="u-a-f">
+                            {% render_field form.block class="f-s-p-c" %}
+                        </div>
+                        {%if form.block.errors%}
+                        <div class="u-a-f mt-2">
+                        {% for err in form.block.errors %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                        </div>
+                        {%endif%}
+                    </div>
+                    <div>
+                        <div class="u-a-f-t">
+                            <p class="u-a-f-p">{{ form.N.label }}</p>
+                        </div>
+                        <div class="u-a-f">
+                            {% render_field form.N class="f-s-p-c"%}
+                        </div>
+                        {%if form.N.errors%}
+                        <div class="u-a-f mt-2">
+                        {% for err in form.N.errors %}
+                            <p>{{ err }}</p>
+                        {% endfor %}
+                        </div>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="u-a-f-s">
+                    <button type="submit" onclick="" class="btn btn-light"> اعمال</button>
+                </div>
+    </form>
+</div>

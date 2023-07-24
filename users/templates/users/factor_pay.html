@@ -1,0 +1,160 @@
+{% extends "main.html" %}
+{% load static %}
+{% load thousands %}
+
+{% load widget_tweaks %}
+{% load widget_tweaks %}
+{% block content %}
+
+            <section class="s-p-m">
+                {% include "base/nav.html" with org="s-p-m-or"%}
+            </section>
+            <section class="p-d-b-s" onclick="hideCart()">
+                <div class="s-p-c s-p-c-d">
+                    {% if user.is_authenticated %}
+                        <div class="lgn-spacer">
+
+                        </div>
+                        <div class="crdmn">
+
+                            <div class="calit">
+                                <section class="ordersc">
+                                    <div class="cardtxt">
+                                        <h3>سبد خرید</h3>
+                                    </div>
+                                    <div class="cartItems">
+                                        
+                                        <ul class="nopadmg">
+                                            {% for p in factor %}
+                                            <li class="cardItem nopadmg">
+                                                <div class="cardcont">
+                                                    <div class="cardcontflex">
+                                                        <div class="itemDtails">
+                                                            <div class="itempic">
+                                                                <a href="{% if not p.product %}{% url 'pot_detail_url' pk=p.pot.id %}{% else %}{% url 'detail_view_url' pk=p.product.id %}{% endif %}">
+                                                                    <div class="crd-p-d">
+                                                                    
+                                                                        <img class="crd-p" src="{% if not p.product %}{{ p.pot.img.url }}{% else %}{{p.product.img.url}}{% endif %}" alt="">
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="itemDtail">
+                                                                <div class="inf">
+                                                                        <div class="pname">
+                                                                          <div>
+                                                                                {% if not p.product %}<a class="txtblc" href="{% url 'pot_detail_url' pk=p.pot.id %}"><span>{{ p.pot.name }}</span></a>
+                                                                                {% else %}
+                                                                                    <div>
+                                                                                        <a class="txtblc" href="{% url 'detail_view_url' pk=p.product.id %}">
+                                                                                            <span class="nopadmg">{{ p.product.name }}</span>
+                                                                                            <span class="p-s-e-s">({{ p.product.size }})</span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    {% if p.pot is not none %}
+                                                                                    <div class="s-i-d">
+                                                                                        <a class="txtblc" href="{% url 'pot_detail_url' pk=p.pot.id%}">
+                                                                                        <img class=" p-i-f-v" src="{{p.pot.img.url}}" width="60px" height="60px">
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    {% endif %}
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+
+                                                                    <div class="ppricee {% if not p.product %}fgrow{%endif%}">
+                                                                        {% if not p.product %}
+                                                                            <span>{{ p.pot.price|sepp:"fa" }}</span> <span class="small"> تومان</span>
+                                                                            {% else %}
+                                                                            <span>{% if p.pot %}({{ p.pot.price|sepp:"fa" }}+){% endif %}</span><span>{{ p.product.price|sepp:"fa" }}</span> <span class="small"> تومان</span>
+                                                                        {% endif %}                    
+                                                                    </div>
+                                                                </div>
+                                                                <div class="quant-pick {% if not p.product %}fgrow{%endif%}">
+                                                                    <div class="p-q-e-d fgrow">
+                                                                        <div>
+                                                                            <input class="p-f-q-p" id="pi{{ p.id }}" name="p{{ p.id }}" type="number" value="{{ p.quantity }}" title="برای اعمال تغییرات، دکمه تیک را بفشارید">
+                                                                        </div>
+                                                                     </div>
+                                                                </div>
+                                                                <div class="services {%if not p.product%}fgrow{%endif%}">
+                                                                    {%if p.product%}
+                                                                    <div class="p-q-e-d p-q-e-d-s p5">
+                                                                        {% if p.product %}
+                                                                        <div>
+                                                                          <span>تعویض گلدان</span>
+                                                                            <div class="s-i-d">
+                                                                            <input onclick="pPick('{{ p.id }}')" type="checkbox" {% if p.change_pot %}checked{% endif %} class="p-f-q-p" id="pcp{{ p.id }}" title="برای اعمال تغییرات، دکمه تیک را بفشارید">
+                                                                            </input>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                          <span>تعویض خاک</span>
+                                                                            <div class="s-i-d">
+                                                                            <input onclick="soPick('{{ p.id }}')" type="checkbox" {% if p.change_soil %}checked{% endif %} class="p-f-q-p" id="pcs{{p.id}}"
+                                                                                    title="برای اعمال تغییرات، دکمه تیک را بفشارید">
+                                                                         </div>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                    </div>
+                                                                    {%endif%}
+                                                                    <div class="tbtdiv">
+                                                                        <div class="p-q-e-d">
+                                                                            <div class="btnad btnad{{ p.id }}">
+                                                                                <div class="f-f-p-s" onclick="editOrder('{{p.id}}')">
+                                                                                    <div class="tick-div " ><p class="tick-p">✓</p></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="prc p5">
+                                                            <div class="prcnum subtotal"><span>{{p.final_price|sepp:"fa"}}</span></div>
+                                                            <a class="deleteitem" href="{% url 'delete_order_url' slug=p.id %}">×</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {%endfor%}
+                                        </ul>
+                                    </div>
+                                    
+                                </section>
+                                    
+                                <section class="ordersummery">
+                                    <div class="cardtxt">
+                                        <h4 class="">خلاصه خرید</h4>
+                                        
+                                    </div>
+                                    <div class="cardtxt">
+                                        <div class="dltr"><span class="dltr">{{t|sepp:"fa"}}</span><span class="small"> تومان</span></div>
+                                    </div>
+                                    <div>
+                                        <button class="viewbtn btnp mbtn"  onclick="cAddress()">ادامه</button>
+                                    </div>
+                                </section>
+                            </div>
+                            
+
+                        </div>
+
+
+                        </div>
+
+
+                        </div>
+
+                        <div class="lgn-spacer">
+
+                        </div>
+                    {% endif %}
+
+                </div>
+            </section>
+
+{% endblock %}
+
+
